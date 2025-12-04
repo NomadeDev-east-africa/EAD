@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E.A.D Interim Agency - Premier Manpower Supply | Halt Group</title>
     <meta name="description" content="E.A.D Interim Agency, Halt Group subsidiary - Premier manpower supply agency providing skilled local labor for construction and industrial projects in Djibouti.">
-    <!-- Version simplifiée (utilise votre logo existant) -->
     <link rel="icon" type="image/jpeg" href="images/newLogo.jpeg">
     <style>
         /* RESET AND BASE */
@@ -171,22 +170,25 @@
             color: var(--primary-blue);
         }
 
-        /* HERO SECTION - AVEC IMAGE Back1.jpg */
+        /* HERO SECTION - MODIFIED */
         .hero-section {
             position: relative;
             padding: 140px 0;
             text-align: center;
-            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
         }
 
-        .hero-bg {
+        .hero-section:before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            object-position: center;
+            background-image: url('images/Back1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             z-index: 0;
         }
 
@@ -751,12 +753,6 @@
                 grid-template-columns: 1fr;
             }
         }
-
-        /* Optimisation pour l'image de fond */
-        .hero-bg {
-            /* Fallback si l'image ne charge pas */
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
-        }
     </style>
 </head>
 <body>
@@ -768,6 +764,8 @@
             <a href="index.html" class="logo">
                 <div class="logo-main">E.A.D</div>
                 <div class="logo-sub">INTERIM AGENCY</div>
+
+                <img> 
             </a>
             <nav class="nav">
                 <a href="about.html">About Us</a>
@@ -779,17 +777,12 @@
     </div>
 </header>
 
-<!-- HERO SECTION - AVEC IMAGE Back1.jpg -->
+<!-- HERO SECTION - MODIFIED -->
 <section class="hero-section">
-    <!-- Image de fond Back1.jpg -->
-    <img src="images/Back1.jpg" 
-         alt="Construction and industrial workers in Djibouti representing E.A.D Interim Agency's workforce" 
-         class="hero-bg"
-         loading="eager">
-    
     <div class="hero-overlay"></div>
     <div class="container">
         <div class="hero-content">
+            
             <h1 class="hero-title">Premier Manpower Supply Agency</h1>
             <p class="hero-subtitle">
                 Connecting skilled professionals with opportunities across Djibouti's construction 
@@ -1321,32 +1314,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Fallback pour l'image de fond Hero (Back1.jpg)
-    const heroBg = document.querySelector('.hero-bg');
-    if (heroBg) {
-        heroBg.onerror = function() {
-            // Si l'image Back1.jpg ne charge pas, appliquer un fond de secours
-            this.style.display = 'none';
-            document.querySelector('.hero-section').style.background = 
-                'linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%)';
-        };
-        
-        // Préchargement de l'image Back1.jpg
-        heroBg.loading = 'eager';
-    }
+    // Preload important images
+    const heroImage = new Image();
+    heroImage.src = 'images/Back1.jpg';
 });
 
-// Préchargement des images importantes
+// Fallback for hero image if local image doesn't load
 window.addEventListener('load', function() {
-    const importantImages = [
-        'images/Back1.jpg',
-        'images/african-bussiness.jpg'
-    ];
-    
-    importantImages.forEach(src => {
-        const img = new Image();
-        img.src = src;
-    });
+    const heroSection = document.querySelector('.hero-section');
+    if (heroSection) {
+        const backgroundImage = window.getComputedStyle(heroSection, ':before').backgroundImage;
+        if (!backgroundImage || backgroundImage === 'none') {
+            heroSection.style.background = 'linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%)';
+        }
+    }
 });
 </script>
 
