@@ -171,7 +171,7 @@
             color: var(--primary-blue);
         }
 
-        /* HERO SECTION - MODIFIÉE AVEC BALISE IMG */
+        /* HERO SECTION - AVEC IMAGE Back1.jpg */
         .hero-section {
             position: relative;
             padding: 140px 0;
@@ -779,11 +779,11 @@
     </div>
 </header>
 
-<!-- HERO SECTION - MODIFIÉE AVEC BALISE IMG -->
+<!-- HERO SECTION - AVEC IMAGE Back1.jpg -->
 <section class="hero-section">
-    <!-- Image de fond intégrée via balise img -->
-    <img src="images/back1.jpg" 
-         alt="Professional business team collaborating in modern office" 
+    <!-- Image de fond Back1.jpg -->
+    <img src="images/Back1.jpg" 
+         alt="Construction and industrial workers in Djibouti representing E.A.D Interim Agency's workforce" 
          class="hero-bg"
          loading="eager">
     
@@ -1321,22 +1321,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Fallback pour l'image de fond Hero
+    // Fallback pour l'image de fond Hero (Back1.jpg)
     const heroBg = document.querySelector('.hero-bg');
     if (heroBg) {
         heroBg.onerror = function() {
-            // Si l'image ne charge pas, appliquer un fond de secours
+            // Si l'image Back1.jpg ne charge pas, appliquer un fond de secours
             this.style.display = 'none';
             document.querySelector('.hero-section').style.background = 
                 'linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%)';
         };
+        
+        // Préchargement de l'image Back1.jpg
+        heroBg.loading = 'eager';
     }
 });
 
 // Préchargement des images importantes
 window.addEventListener('load', function() {
     const importantImages = [
-        'images/back1.jpg',
+        'images/Back1.jpg',
         'images/african-bussiness.jpg'
     ];
     
