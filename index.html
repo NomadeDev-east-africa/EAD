@@ -6,7 +6,7 @@
     <title>E.A.D Interim Agency - Premier Manpower Supply | Halt Group</title>
     <meta name="description" content="E.A.D Interim Agency, Halt Group subsidiary - Premier manpower supply agency providing skilled local labor for construction and industrial projects in Djibouti.">
     <!-- Version simplifiée (utilise votre logo existant) -->
-<link rel="icon" type="image/jpeg" href="images/newLogo.jpeg">
+    <link rel="icon" type="image/jpeg" href="images/newLogo.jpeg">
     <style>
         /* RESET AND BASE */
         * {
@@ -171,25 +171,22 @@
             color: var(--primary-blue);
         }
 
-        /* HERO SECTION - MODIFIED */
+        /* HERO SECTION - MODIFIÉE AVEC BALISE IMG */
         .hero-section {
             position: relative;
             padding: 140px 0;
             text-align: center;
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            overflow: hidden;
         }
 
-        .hero-section:before {
-            content: '';
+        .hero-bg {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('images/Back1.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            object-fit: cover;
+            object-position: center;
             z-index: 0;
         }
 
@@ -754,6 +751,12 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Optimisation pour l'image de fond */
+        .hero-bg {
+            /* Fallback si l'image ne charge pas */
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+        }
     </style>
 </head>
 <body>
@@ -776,8 +779,14 @@
     </div>
 </header>
 
-<!-- HERO SECTION - MODIFIED -->
+<!-- HERO SECTION - MODIFIÉE AVEC BALISE IMG -->
 <section class="hero-section">
+    <!-- Image de fond intégrée via balise img -->
+    <img src="images/groupe1.jpg" 
+         alt="Professional business team collaborating in modern office" 
+         class="hero-bg"
+         loading="eager">
+    
     <div class="hero-overlay"></div>
     <div class="container">
         <div class="hero-content">
@@ -1312,20 +1321,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Preload important images
-    const heroImage = new Image();
-    heroImage.src = 'images/Back1.jpg';
+    // Fallback pour l'image de fond Hero
+    const heroBg = document.querySelector('.hero-bg');
+    if (heroBg) {
+        heroBg.onerror = function() {
+            // Si l'image ne charge pas, appliquer un fond de secours
+            this.style.display = 'none';
+            document.querySelector('.hero-section').style.background = 
+                'linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%)';
+        };
+    }
 });
 
-// Fallback for hero image if local image doesn't load
+// Préchargement des images importantes
 window.addEventListener('load', function() {
-    const heroSection = document.querySelector('.hero-section');
-    if (heroSection) {
-        const backgroundImage = window.getComputedStyle(heroSection, ':before').backgroundImage;
-        if (!backgroundImage || backgroundImage === 'none') {
-            heroSection.style.background = 'linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%)';
-        }
-    }
+    const importantImages = [
+        'images/groupe1.jpg',
+        'images/african-bussiness.jpg'
+    ];
+    
+    importantImages.forEach(src => {
+        const img = new Image();
+        img.src = src;
+    });
 });
 </script>
 
